@@ -386,6 +386,14 @@ void WriteMethodsRecursive(StreamWriter fs, string baseType, TypeDefinition type
 
         var retType = GetSimpleType(member.ReturnType);
 
+        var obsolete = member.CustomAttributes.FirstOrDefault(attr => attr.AttributeType.FullName == "System.ObsoleteAttribute");
+        if (obsolete != null)
+        {
+            var message = obsolete.ConstructorArguments[0].Value as string;
+            fs.WriteLine($"__declspec(deprecated(\"{message}\"))");
+        }
+
+
         var name = $"{baseType}_{memberName}";
         fs.Write($"static inline {retType.PadRight(RetWidth)} {name.PadRight(NameWidth)}({baseType}* this");
         if (member.Parameters.Count != 0)

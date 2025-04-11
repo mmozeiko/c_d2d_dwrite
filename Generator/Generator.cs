@@ -564,6 +564,7 @@ void Parse(ModuleDefinition module, string output, string ns)
                 name != "D2D1_FIGURE_BEGIN" &&
                 name != "D2D1_FIGURE_END" &&
                 name != "D2D1_BEZIER_SEGMENT" &&
+                name != "D2D1_GRADIENT_STOP" &&
                 name != "ID2D1SimplifiedGeometrySink")
             {
                 continue;
@@ -616,6 +617,9 @@ void Parse(ModuleDefinition module, string output, string ns)
         fs.WriteLine();
         if (ns == "Windows.Win32.Graphics.Direct2D")
         {
+            fs.WriteLine("typedef enum DWRITE_PAINT_FEATURE_LEVEL DWRITE_PAINT_FEATURE_LEVEL;");
+
+            fs.WriteLine();
             fs.WriteLine("typedef D2D_COLOR_F D2D1_COLOR_F;");
             fs.WriteLine("typedef struct DWRITE_GLYPH_RUN DWRITE_GLYPH_RUN;");
             fs.WriteLine("typedef struct DWRITE_GLYPH_RUN_DESCRIPTION DWRITE_GLYPH_RUN_DESCRIPTION;");
@@ -635,6 +639,9 @@ void Parse(ModuleDefinition module, string output, string ns)
         }
         else
         {
+            fs.WriteLine("typedef struct D2D1_GRADIENT_STOP D2D1_GRADIENT_STOP;");
+
+            fs.WriteLine();
             fs.WriteLine("typedef interface ID2D1SimplifiedGeometrySink ID2D1SimplifiedGeometrySink;");
             fs.WriteLine("typedef interface ID2D1SimplifiedGeometrySink IDWriteGeometrySink;");
         }

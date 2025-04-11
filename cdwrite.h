@@ -7,6 +7,8 @@
 
 #pragma comment (lib, "dwrite")
 
+typedef struct D2D1_GRADIENT_STOP D2D1_GRADIENT_STOP;
+
 typedef interface ID2D1SimplifiedGeometrySink ID2D1SimplifiedGeometrySink;
 typedef interface ID2D1SimplifiedGeometrySink IDWriteGeometrySink;
 
@@ -15,6 +17,8 @@ typedef interface ID2D1SimplifiedGeometrySink IDWriteGeometrySink;
 typedef struct IDWriteAsyncResult              { struct { void* tbl[]; }* v; } IDWriteAsyncResult;
 typedef struct IDWriteBitmapRenderTarget       { struct { void* tbl[]; }* v; } IDWriteBitmapRenderTarget;
 typedef struct IDWriteBitmapRenderTarget1      { struct { void* tbl[]; }* v; } IDWriteBitmapRenderTarget1;
+typedef struct IDWriteBitmapRenderTarget2      { struct { void* tbl[]; }* v; } IDWriteBitmapRenderTarget2;
+typedef struct IDWriteBitmapRenderTarget3      { struct { void* tbl[]; }* v; } IDWriteBitmapRenderTarget3;
 typedef struct IDWriteColorGlyphRunEnumerator  { struct { void* tbl[]; }* v; } IDWriteColorGlyphRunEnumerator;
 typedef struct IDWriteColorGlyphRunEnumerator1 { struct { void* tbl[]; }* v; } IDWriteColorGlyphRunEnumerator1;
 typedef struct IDWriteFactory                  { struct { void* tbl[]; }* v; } IDWriteFactory;
@@ -25,6 +29,7 @@ typedef struct IDWriteFactory4                 { struct { void* tbl[]; }* v; } I
 typedef struct IDWriteFactory5                 { struct { void* tbl[]; }* v; } IDWriteFactory5;
 typedef struct IDWriteFactory6                 { struct { void* tbl[]; }* v; } IDWriteFactory6;
 typedef struct IDWriteFactory7                 { struct { void* tbl[]; }* v; } IDWriteFactory7;
+typedef struct IDWriteFactory8                 { struct { void* tbl[]; }* v; } IDWriteFactory8;
 typedef struct IDWriteFont                     { struct { void* tbl[]; }* v; } IDWriteFont;
 typedef struct IDWriteFont1                    { struct { void* tbl[]; }* v; } IDWriteFont1;
 typedef struct IDWriteFont2                    { struct { void* tbl[]; }* v; } IDWriteFont2;
@@ -43,6 +48,7 @@ typedef struct IDWriteFontFace3                { struct { void* tbl[]; }* v; } I
 typedef struct IDWriteFontFace4                { struct { void* tbl[]; }* v; } IDWriteFontFace4;
 typedef struct IDWriteFontFace5                { struct { void* tbl[]; }* v; } IDWriteFontFace5;
 typedef struct IDWriteFontFace6                { struct { void* tbl[]; }* v; } IDWriteFontFace6;
+typedef struct IDWriteFontFace7                { struct { void* tbl[]; }* v; } IDWriteFontFace7;
 typedef struct IDWriteFontFaceReference        { struct { void* tbl[]; }* v; } IDWriteFontFaceReference;
 typedef struct IDWriteFontFaceReference1       { struct { void* tbl[]; }* v; } IDWriteFontFaceReference1;
 typedef struct IDWriteFontFallback             { struct { void* tbl[]; }* v; } IDWriteFontFallback;
@@ -75,6 +81,7 @@ typedef struct IDWriteInMemoryFontFileLoader   { struct { void* tbl[]; }* v; } I
 typedef struct IDWriteLocalFontFileLoader      { struct { void* tbl[]; }* v; } IDWriteLocalFontFileLoader;
 typedef struct IDWriteLocalizedStrings         { struct { void* tbl[]; }* v; } IDWriteLocalizedStrings;
 typedef struct IDWriteNumberSubstitution       { struct { void* tbl[]; }* v; } IDWriteNumberSubstitution;
+typedef struct IDWritePaintReader              { struct { void* tbl[]; }* v; } IDWritePaintReader;
 typedef struct IDWritePixelSnapping            { struct { void* tbl[]; }* v; } IDWritePixelSnapping;
 typedef struct IDWriteRemoteFontFileLoader     { struct { void* tbl[]; }* v; } IDWriteRemoteFontFileLoader;
 typedef struct IDWriteRemoteFontFileStream     { struct { void* tbl[]; }* v; } IDWriteRemoteFontFileStream;
@@ -119,6 +126,7 @@ typedef struct IDWriteTypography               { struct { void* tbl[]; }* v; } I
 #define DWRITE_E_TOOMANYDOWNLOADS ((HRESULT)0x88985010L)
 #endif
 #define DWRITE_ERR_BASE 20480
+#define DWRITE_NO_PALETTE_INDEX 65535
 #define DWRITE_STANDARD_FONT_AXIS_COUNT 5
 #define FACILITY_DWRITE 2200
 
@@ -147,6 +155,37 @@ typedef enum DWRITE_BREAK_CONDITION {
     DWRITE_BREAK_CONDITION_MAY_NOT_BREAK = 2,
     DWRITE_BREAK_CONDITION_MUST_BREAK    = 3,
 } DWRITE_BREAK_CONDITION;
+
+typedef enum DWRITE_COLOR_COMPOSITE_MODE {
+    DWRITE_COLOR_COMPOSITE_CLEAR          = 0,
+    DWRITE_COLOR_COMPOSITE_SRC            = 1,
+    DWRITE_COLOR_COMPOSITE_DEST           = 2,
+    DWRITE_COLOR_COMPOSITE_SRC_OVER       = 3,
+    DWRITE_COLOR_COMPOSITE_DEST_OVER      = 4,
+    DWRITE_COLOR_COMPOSITE_SRC_IN         = 5,
+    DWRITE_COLOR_COMPOSITE_DEST_IN        = 6,
+    DWRITE_COLOR_COMPOSITE_SRC_OUT        = 7,
+    DWRITE_COLOR_COMPOSITE_DEST_OUT       = 8,
+    DWRITE_COLOR_COMPOSITE_SRC_ATOP       = 9,
+    DWRITE_COLOR_COMPOSITE_DEST_ATOP      = 10,
+    DWRITE_COLOR_COMPOSITE_XOR            = 11,
+    DWRITE_COLOR_COMPOSITE_PLUS           = 12,
+    DWRITE_COLOR_COMPOSITE_SCREEN         = 13,
+    DWRITE_COLOR_COMPOSITE_OVERLAY        = 14,
+    DWRITE_COLOR_COMPOSITE_DARKEN         = 15,
+    DWRITE_COLOR_COMPOSITE_LIGHTEN        = 16,
+    DWRITE_COLOR_COMPOSITE_COLOR_DODGE    = 17,
+    DWRITE_COLOR_COMPOSITE_COLOR_BURN     = 18,
+    DWRITE_COLOR_COMPOSITE_HARD_LIGHT     = 19,
+    DWRITE_COLOR_COMPOSITE_SOFT_LIGHT     = 20,
+    DWRITE_COLOR_COMPOSITE_DIFFERENCE     = 21,
+    DWRITE_COLOR_COMPOSITE_EXCLUSION      = 22,
+    DWRITE_COLOR_COMPOSITE_MULTIPLY       = 23,
+    DWRITE_COLOR_COMPOSITE_HSL_HUE        = 24,
+    DWRITE_COLOR_COMPOSITE_HSL_SATURATION = 25,
+    DWRITE_COLOR_COMPOSITE_HSL_COLOR      = 26,
+    DWRITE_COLOR_COMPOSITE_HSL_LUMINOSITY = 27,
+} DWRITE_COLOR_COMPOSITE_MODE;
 
 typedef enum DWRITE_CONTAINER_TYPE {
     DWRITE_CONTAINER_TYPE_UNKNOWN = 0,
@@ -445,6 +484,32 @@ typedef enum DWRITE_OUTLINE_THRESHOLD {
     DWRITE_OUTLINE_THRESHOLD_ANTIALIASED = 0,
     DWRITE_OUTLINE_THRESHOLD_ALIASED     = 1,
 } DWRITE_OUTLINE_THRESHOLD;
+
+typedef enum DWRITE_PAINT_ATTRIBUTES {
+    DWRITE_PAINT_ATTRIBUTES_NONE            = 0,
+    DWRITE_PAINT_ATTRIBUTES_USES_PALETTE    = 1,
+    DWRITE_PAINT_ATTRIBUTES_USES_TEXT_COLOR = 2,
+} DWRITE_PAINT_ATTRIBUTES;
+
+typedef enum DWRITE_PAINT_FEATURE_LEVEL {
+    DWRITE_PAINT_FEATURE_LEVEL_NONE    = 0,
+    DWRITE_PAINT_FEATURE_LEVEL_COLR_V0 = 1,
+    DWRITE_PAINT_FEATURE_LEVEL_COLR_V1 = 2,
+} DWRITE_PAINT_FEATURE_LEVEL;
+
+typedef enum DWRITE_PAINT_TYPE {
+    DWRITE_PAINT_TYPE_NONE            = 0,
+    DWRITE_PAINT_TYPE_LAYERS          = 1,
+    DWRITE_PAINT_TYPE_SOLID_GLYPH     = 2,
+    DWRITE_PAINT_TYPE_SOLID           = 3,
+    DWRITE_PAINT_TYPE_LINEAR_GRADIENT = 4,
+    DWRITE_PAINT_TYPE_RADIAL_GRADIENT = 5,
+    DWRITE_PAINT_TYPE_SWEEP_GRADIENT  = 6,
+    DWRITE_PAINT_TYPE_GLYPH           = 7,
+    DWRITE_PAINT_TYPE_COLOR_GLYPH     = 8,
+    DWRITE_PAINT_TYPE_TRANSFORM       = 9,
+    DWRITE_PAINT_TYPE_COMPOSITE       = 10,
+} DWRITE_PAINT_TYPE;
 
 typedef enum DWRITE_PANOSE_ARM_STYLE {
     DWRITE_PANOSE_ARM_STYLE_ANY                           = 0,
@@ -893,6 +958,12 @@ typedef enum DWRITE_WORD_WRAPPING {
 
 // structs
 
+typedef struct DWRITE_BITMAP_DATA_BGRA32 {
+    UINT32  width;
+    UINT32  height;
+    UINT32* pixels;
+} DWRITE_BITMAP_DATA_BGRA32;
+
 typedef struct DWRITE_CARET_METRICS {
     INT16 slopeRise;
     INT16 slopeRun;
@@ -1114,6 +1185,66 @@ typedef struct DWRITE_OVERHANG_METRICS {
     FLOAT bottom;
 } DWRITE_OVERHANG_METRICS;
 
+typedef struct DWRITE_PAINT_COLOR {
+    DWRITE_COLOR_F          value;
+    UINT16                  paletteEntryIndex;
+    FLOAT                   alphaMultiplier;
+    DWRITE_PAINT_ATTRIBUTES colorAttributes;
+} DWRITE_PAINT_COLOR;
+
+typedef struct DWRITE_PAINT_ELEMENT {
+    DWRITE_PAINT_TYPE paintType;
+    struct {
+        struct {
+            UINT32 childCount;
+        } layers;
+        struct {
+            UINT32             glyphIndex;
+            DWRITE_PAINT_COLOR color;
+        } solidGlyph;
+        DWRITE_PAINT_COLOR solid;
+        struct {
+            UINT32 extendMode;
+            UINT32 gradientStopCount;
+            FLOAT  x0;
+            FLOAT  y0;
+            FLOAT  x1;
+            FLOAT  y1;
+            FLOAT  x2;
+            FLOAT  y2;
+        } linearGradient;
+        struct {
+            UINT32 extendMode;
+            UINT32 gradientStopCount;
+            FLOAT  x0;
+            FLOAT  y0;
+            FLOAT  radius0;
+            FLOAT  x1;
+            FLOAT  y1;
+            FLOAT  radius1;
+        } radialGradient;
+        struct {
+            UINT32 extendMode;
+            UINT32 gradientStopCount;
+            FLOAT  centerX;
+            FLOAT  centerY;
+            FLOAT  startAngle;
+            FLOAT  endAngle;
+        } sweepGradient;
+        struct {
+            UINT32 glyphIndex;
+        } glyph;
+        struct {
+            UINT32     glyphIndex;
+            D2D_RECT_F clipBox;
+        } colorGlyph;
+        DWRITE_MATRIX      transform;
+        struct {
+            DWRITE_COLOR_COMPOSITE_MODE mode;
+        } composite;
+    } paint;
+} DWRITE_PAINT_ELEMENT;
+
 typedef union DWRITE_PANOSE {
     UINT8       values[10];
     UINT8       familyKind;
@@ -1294,6 +1425,39 @@ static inline HRESULT                           IDWriteBitmapRenderTarget1_GetSi
 static inline HRESULT                           IDWriteBitmapRenderTarget1_Resize                            (IDWriteBitmapRenderTarget1* this, UINT32 width, UINT32 height) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget1*, UINT32, UINT32))this->v->tbl[10])(this, width, height); }
 static inline DWRITE_TEXT_ANTIALIAS_MODE        IDWriteBitmapRenderTarget1_GetTextAntialiasMode              (IDWriteBitmapRenderTarget1* this) { return ((DWRITE_TEXT_ANTIALIAS_MODE (WINAPI*)(IDWriteBitmapRenderTarget1*))this->v->tbl[11])(this); }
 static inline HRESULT                           IDWriteBitmapRenderTarget1_SetTextAntialiasMode              (IDWriteBitmapRenderTarget1* this, DWRITE_TEXT_ANTIALIAS_MODE antialiasMode) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget1*, DWRITE_TEXT_ANTIALIAS_MODE))this->v->tbl[12])(this, antialiasMode); }
+
+static inline HRESULT                           IDWriteBitmapRenderTarget2_QueryInterface                    (IDWriteBitmapRenderTarget2* this, const GUID* riid, void** ppvObject) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget2*, const GUID*, void**))this->v->tbl[0])(this, riid, ppvObject); }
+static inline UINT32                            IDWriteBitmapRenderTarget2_AddRef                            (IDWriteBitmapRenderTarget2* this) { return ((UINT32 (WINAPI*)(IDWriteBitmapRenderTarget2*))this->v->tbl[1])(this); }
+static inline UINT32                            IDWriteBitmapRenderTarget2_Release                           (IDWriteBitmapRenderTarget2* this) { return ((UINT32 (WINAPI*)(IDWriteBitmapRenderTarget2*))this->v->tbl[2])(this); }
+static inline HRESULT                           IDWriteBitmapRenderTarget2_DrawGlyphRun                      (IDWriteBitmapRenderTarget2* this, FLOAT baselineOriginX, FLOAT baselineOriginY, DWRITE_MEASURING_MODE measuringMode, const DWRITE_GLYPH_RUN* glyphRun, IDWriteRenderingParams* renderingParams, COLORREF textColor, RECT* blackBoxRect) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget2*, FLOAT, FLOAT, DWRITE_MEASURING_MODE, const DWRITE_GLYPH_RUN*, IDWriteRenderingParams*, COLORREF, RECT*))this->v->tbl[3])(this, baselineOriginX, baselineOriginY, measuringMode, glyphRun, renderingParams, textColor, blackBoxRect); }
+static inline HDC                               IDWriteBitmapRenderTarget2_GetMemoryDC                       (IDWriteBitmapRenderTarget2* this) { return ((HDC (WINAPI*)(IDWriteBitmapRenderTarget2*))this->v->tbl[4])(this); }
+static inline FLOAT                             IDWriteBitmapRenderTarget2_GetPixelsPerDip                   (IDWriteBitmapRenderTarget2* this) { return ((FLOAT (WINAPI*)(IDWriteBitmapRenderTarget2*))this->v->tbl[5])(this); }
+static inline HRESULT                           IDWriteBitmapRenderTarget2_SetPixelsPerDip                   (IDWriteBitmapRenderTarget2* this, FLOAT pixelsPerDip) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget2*, FLOAT))this->v->tbl[6])(this, pixelsPerDip); }
+static inline HRESULT                           IDWriteBitmapRenderTarget2_GetCurrentTransform               (IDWriteBitmapRenderTarget2* this, DWRITE_MATRIX* transform) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget2*, DWRITE_MATRIX*))this->v->tbl[7])(this, transform); }
+static inline HRESULT                           IDWriteBitmapRenderTarget2_SetCurrentTransform               (IDWriteBitmapRenderTarget2* this, const DWRITE_MATRIX* transform) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget2*, const DWRITE_MATRIX*))this->v->tbl[8])(this, transform); }
+static inline HRESULT                           IDWriteBitmapRenderTarget2_GetSize                           (IDWriteBitmapRenderTarget2* this, SIZE* size) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget2*, SIZE*))this->v->tbl[9])(this, size); }
+static inline HRESULT                           IDWriteBitmapRenderTarget2_Resize                            (IDWriteBitmapRenderTarget2* this, UINT32 width, UINT32 height) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget2*, UINT32, UINT32))this->v->tbl[10])(this, width, height); }
+static inline DWRITE_TEXT_ANTIALIAS_MODE        IDWriteBitmapRenderTarget2_GetTextAntialiasMode              (IDWriteBitmapRenderTarget2* this) { return ((DWRITE_TEXT_ANTIALIAS_MODE (WINAPI*)(IDWriteBitmapRenderTarget2*))this->v->tbl[11])(this); }
+static inline HRESULT                           IDWriteBitmapRenderTarget2_SetTextAntialiasMode              (IDWriteBitmapRenderTarget2* this, DWRITE_TEXT_ANTIALIAS_MODE antialiasMode) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget2*, DWRITE_TEXT_ANTIALIAS_MODE))this->v->tbl[12])(this, antialiasMode); }
+static inline HRESULT                           IDWriteBitmapRenderTarget2_GetBitmapData                     (IDWriteBitmapRenderTarget2* this, DWRITE_BITMAP_DATA_BGRA32* bitmapData) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget2*, DWRITE_BITMAP_DATA_BGRA32*))this->v->tbl[13])(this, bitmapData); }
+
+static inline HRESULT                           IDWriteBitmapRenderTarget3_QueryInterface                    (IDWriteBitmapRenderTarget3* this, const GUID* riid, void** ppvObject) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget3*, const GUID*, void**))this->v->tbl[0])(this, riid, ppvObject); }
+static inline UINT32                            IDWriteBitmapRenderTarget3_AddRef                            (IDWriteBitmapRenderTarget3* this) { return ((UINT32 (WINAPI*)(IDWriteBitmapRenderTarget3*))this->v->tbl[1])(this); }
+static inline UINT32                            IDWriteBitmapRenderTarget3_Release                           (IDWriteBitmapRenderTarget3* this) { return ((UINT32 (WINAPI*)(IDWriteBitmapRenderTarget3*))this->v->tbl[2])(this); }
+static inline HRESULT                           IDWriteBitmapRenderTarget3_DrawGlyphRun                      (IDWriteBitmapRenderTarget3* this, FLOAT baselineOriginX, FLOAT baselineOriginY, DWRITE_MEASURING_MODE measuringMode, const DWRITE_GLYPH_RUN* glyphRun, IDWriteRenderingParams* renderingParams, COLORREF textColor, RECT* blackBoxRect) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget3*, FLOAT, FLOAT, DWRITE_MEASURING_MODE, const DWRITE_GLYPH_RUN*, IDWriteRenderingParams*, COLORREF, RECT*))this->v->tbl[3])(this, baselineOriginX, baselineOriginY, measuringMode, glyphRun, renderingParams, textColor, blackBoxRect); }
+static inline HDC                               IDWriteBitmapRenderTarget3_GetMemoryDC                       (IDWriteBitmapRenderTarget3* this) { return ((HDC (WINAPI*)(IDWriteBitmapRenderTarget3*))this->v->tbl[4])(this); }
+static inline FLOAT                             IDWriteBitmapRenderTarget3_GetPixelsPerDip                   (IDWriteBitmapRenderTarget3* this) { return ((FLOAT (WINAPI*)(IDWriteBitmapRenderTarget3*))this->v->tbl[5])(this); }
+static inline HRESULT                           IDWriteBitmapRenderTarget3_SetPixelsPerDip                   (IDWriteBitmapRenderTarget3* this, FLOAT pixelsPerDip) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget3*, FLOAT))this->v->tbl[6])(this, pixelsPerDip); }
+static inline HRESULT                           IDWriteBitmapRenderTarget3_GetCurrentTransform               (IDWriteBitmapRenderTarget3* this, DWRITE_MATRIX* transform) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget3*, DWRITE_MATRIX*))this->v->tbl[7])(this, transform); }
+static inline HRESULT                           IDWriteBitmapRenderTarget3_SetCurrentTransform               (IDWriteBitmapRenderTarget3* this, const DWRITE_MATRIX* transform) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget3*, const DWRITE_MATRIX*))this->v->tbl[8])(this, transform); }
+static inline HRESULT                           IDWriteBitmapRenderTarget3_GetSize                           (IDWriteBitmapRenderTarget3* this, SIZE* size) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget3*, SIZE*))this->v->tbl[9])(this, size); }
+static inline HRESULT                           IDWriteBitmapRenderTarget3_Resize                            (IDWriteBitmapRenderTarget3* this, UINT32 width, UINT32 height) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget3*, UINT32, UINT32))this->v->tbl[10])(this, width, height); }
+static inline DWRITE_TEXT_ANTIALIAS_MODE        IDWriteBitmapRenderTarget3_GetTextAntialiasMode              (IDWriteBitmapRenderTarget3* this) { return ((DWRITE_TEXT_ANTIALIAS_MODE (WINAPI*)(IDWriteBitmapRenderTarget3*))this->v->tbl[11])(this); }
+static inline HRESULT                           IDWriteBitmapRenderTarget3_SetTextAntialiasMode              (IDWriteBitmapRenderTarget3* this, DWRITE_TEXT_ANTIALIAS_MODE antialiasMode) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget3*, DWRITE_TEXT_ANTIALIAS_MODE))this->v->tbl[12])(this, antialiasMode); }
+static inline HRESULT                           IDWriteBitmapRenderTarget3_GetBitmapData                     (IDWriteBitmapRenderTarget3* this, DWRITE_BITMAP_DATA_BGRA32* bitmapData) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget3*, DWRITE_BITMAP_DATA_BGRA32*))this->v->tbl[13])(this, bitmapData); }
+static inline DWRITE_PAINT_FEATURE_LEVEL        IDWriteBitmapRenderTarget3_GetPaintFeatureLevel              (IDWriteBitmapRenderTarget3* this) { return ((DWRITE_PAINT_FEATURE_LEVEL (WINAPI*)(IDWriteBitmapRenderTarget3*))this->v->tbl[14])(this); }
+static inline HRESULT                           IDWriteBitmapRenderTarget3_DrawPaintGlyphRun                 (IDWriteBitmapRenderTarget3* this, FLOAT baselineOriginX, FLOAT baselineOriginY, DWRITE_MEASURING_MODE measuringMode, const DWRITE_GLYPH_RUN* glyphRun, enum DWRITE_GLYPH_IMAGE_FORMATS glyphImageFormat, COLORREF textColor, UINT32 colorPaletteIndex, RECT* blackBoxRect) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget3*, FLOAT, FLOAT, DWRITE_MEASURING_MODE, const DWRITE_GLYPH_RUN*, enum DWRITE_GLYPH_IMAGE_FORMATS, COLORREF, UINT32, RECT*))this->v->tbl[15])(this, baselineOriginX, baselineOriginY, measuringMode, glyphRun, glyphImageFormat, textColor, colorPaletteIndex, blackBoxRect); }
+static inline HRESULT                           IDWriteBitmapRenderTarget3_DrawGlyphRunWithColorSupport      (IDWriteBitmapRenderTarget3* this, FLOAT baselineOriginX, FLOAT baselineOriginY, DWRITE_MEASURING_MODE measuringMode, const DWRITE_GLYPH_RUN* glyphRun, IDWriteRenderingParams* renderingParams, COLORREF textColor, UINT32 colorPaletteIndex, RECT* blackBoxRect) { return ((HRESULT (WINAPI*)(IDWriteBitmapRenderTarget3*, FLOAT, FLOAT, DWRITE_MEASURING_MODE, const DWRITE_GLYPH_RUN*, IDWriteRenderingParams*, COLORREF, UINT32, RECT*))this->v->tbl[16])(this, baselineOriginX, baselineOriginY, measuringMode, glyphRun, renderingParams, textColor, colorPaletteIndex, blackBoxRect); }
 
 static inline HRESULT                           IDWriteColorGlyphRunEnumerator_QueryInterface                (IDWriteColorGlyphRunEnumerator* this, const GUID* riid, void** ppvObject) { return ((HRESULT (WINAPI*)(IDWriteColorGlyphRunEnumerator*, const GUID*, void**))this->v->tbl[0])(this, riid, ppvObject); }
 static inline UINT32                            IDWriteColorGlyphRunEnumerator_AddRef                        (IDWriteColorGlyphRunEnumerator* this) { return ((UINT32 (WINAPI*)(IDWriteColorGlyphRunEnumerator*))this->v->tbl[1])(this); }
@@ -1639,6 +1803,65 @@ static inline HRESULT                           IDWriteFactory7_CreateFontSetBui
 static inline HRESULT                           IDWriteFactory7_CreateTextFormat1                            (IDWriteFactory7* this, const WCHAR* fontFamilyName, IDWriteFontCollection* fontCollection, const DWRITE_FONT_AXIS_VALUE* fontAxisValues, UINT32 fontAxisValueCount, FLOAT fontSize, const WCHAR* localeName, IDWriteTextFormat3** textFormat) { return ((HRESULT (WINAPI*)(IDWriteFactory7*, const WCHAR*, IDWriteFontCollection*, const DWRITE_FONT_AXIS_VALUE*, UINT32, FLOAT, const WCHAR*, IDWriteTextFormat3**))this->v->tbl[54])(this, fontFamilyName, fontCollection, fontAxisValues, fontAxisValueCount, fontSize, localeName, textFormat); }
 static inline HRESULT                           IDWriteFactory7_GetSystemFontSet2                            (IDWriteFactory7* this, BOOL includeDownloadableFonts, IDWriteFontSet2** fontSet) { return ((HRESULT (WINAPI*)(IDWriteFactory7*, BOOL, IDWriteFontSet2**))this->v->tbl[55])(this, includeDownloadableFonts, fontSet); }
 static inline HRESULT                           IDWriteFactory7_GetSystemFontCollection3                     (IDWriteFactory7* this, BOOL includeDownloadableFonts, DWRITE_FONT_FAMILY_MODEL fontFamilyModel, IDWriteFontCollection3** fontCollection) { return ((HRESULT (WINAPI*)(IDWriteFactory7*, BOOL, DWRITE_FONT_FAMILY_MODEL, IDWriteFontCollection3**))this->v->tbl[56])(this, includeDownloadableFonts, fontFamilyModel, fontCollection); }
+
+static inline HRESULT                           IDWriteFactory8_QueryInterface                               (IDWriteFactory8* this, const GUID* riid, void** ppvObject) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const GUID*, void**))this->v->tbl[0])(this, riid, ppvObject); }
+static inline UINT32                            IDWriteFactory8_AddRef                                       (IDWriteFactory8* this) { return ((UINT32 (WINAPI*)(IDWriteFactory8*))this->v->tbl[1])(this); }
+static inline UINT32                            IDWriteFactory8_Release                                      (IDWriteFactory8* this) { return ((UINT32 (WINAPI*)(IDWriteFactory8*))this->v->tbl[2])(this); }
+static inline HRESULT                           IDWriteFactory8_GetSystemFontCollection                      (IDWriteFactory8* this, IDWriteFontCollection** fontCollection, BOOL checkForUpdates) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontCollection**, BOOL))this->v->tbl[3])(this, fontCollection, checkForUpdates); }
+static inline HRESULT                           IDWriteFactory8_CreateCustomFontCollection                   (IDWriteFactory8* this, IDWriteFontCollectionLoader* collectionLoader, const void* collectionKey, UINT32 collectionKeySize, IDWriteFontCollection** fontCollection) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontCollectionLoader*, const void*, UINT32, IDWriteFontCollection**))this->v->tbl[4])(this, collectionLoader, collectionKey, collectionKeySize, fontCollection); }
+static inline HRESULT                           IDWriteFactory8_RegisterFontCollectionLoader                 (IDWriteFactory8* this, IDWriteFontCollectionLoader* fontCollectionLoader) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontCollectionLoader*))this->v->tbl[5])(this, fontCollectionLoader); }
+static inline HRESULT                           IDWriteFactory8_UnregisterFontCollectionLoader               (IDWriteFactory8* this, IDWriteFontCollectionLoader* fontCollectionLoader) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontCollectionLoader*))this->v->tbl[6])(this, fontCollectionLoader); }
+static inline HRESULT                           IDWriteFactory8_CreateFontFileReference                      (IDWriteFactory8* this, const WCHAR* filePath, const FILETIME* lastWriteTime, IDWriteFontFile** fontFile) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const WCHAR*, const FILETIME*, IDWriteFontFile**))this->v->tbl[7])(this, filePath, lastWriteTime, fontFile); }
+static inline HRESULT                           IDWriteFactory8_CreateCustomFontFileReference                (IDWriteFactory8* this, const void* fontFileReferenceKey, UINT32 fontFileReferenceKeySize, IDWriteFontFileLoader* fontFileLoader, IDWriteFontFile** fontFile) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const void*, UINT32, IDWriteFontFileLoader*, IDWriteFontFile**))this->v->tbl[8])(this, fontFileReferenceKey, fontFileReferenceKeySize, fontFileLoader, fontFile); }
+static inline HRESULT                           IDWriteFactory8_CreateFontFace                               (IDWriteFactory8* this, DWRITE_FONT_FACE_TYPE fontFaceType, UINT32 numberOfFiles, IDWriteFontFile** fontFiles, UINT32 faceIndex, DWRITE_FONT_SIMULATIONS fontFaceSimulationFlags, IDWriteFontFace** fontFace) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, DWRITE_FONT_FACE_TYPE, UINT32, IDWriteFontFile**, UINT32, DWRITE_FONT_SIMULATIONS, IDWriteFontFace**))this->v->tbl[9])(this, fontFaceType, numberOfFiles, fontFiles, faceIndex, fontFaceSimulationFlags, fontFace); }
+static inline HRESULT                           IDWriteFactory8_CreateRenderingParams                        (IDWriteFactory8* this, IDWriteRenderingParams** renderingParams) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteRenderingParams**))this->v->tbl[10])(this, renderingParams); }
+static inline HRESULT                           IDWriteFactory8_CreateMonitorRenderingParams                 (IDWriteFactory8* this, HMONITOR monitor, IDWriteRenderingParams** renderingParams) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, HMONITOR, IDWriteRenderingParams**))this->v->tbl[11])(this, monitor, renderingParams); }
+static inline HRESULT                           IDWriteFactory8_CreateCustomRenderingParams                  (IDWriteFactory8* this, FLOAT gamma, FLOAT enhancedContrast, FLOAT clearTypeLevel, DWRITE_PIXEL_GEOMETRY pixelGeometry, DWRITE_RENDERING_MODE renderingMode, IDWriteRenderingParams** renderingParams) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, FLOAT, FLOAT, FLOAT, DWRITE_PIXEL_GEOMETRY, DWRITE_RENDERING_MODE, IDWriteRenderingParams**))this->v->tbl[12])(this, gamma, enhancedContrast, clearTypeLevel, pixelGeometry, renderingMode, renderingParams); }
+static inline HRESULT                           IDWriteFactory8_RegisterFontFileLoader                       (IDWriteFactory8* this, IDWriteFontFileLoader* fontFileLoader) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontFileLoader*))this->v->tbl[13])(this, fontFileLoader); }
+static inline HRESULT                           IDWriteFactory8_UnregisterFontFileLoader                     (IDWriteFactory8* this, IDWriteFontFileLoader* fontFileLoader) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontFileLoader*))this->v->tbl[14])(this, fontFileLoader); }
+static inline HRESULT                           IDWriteFactory8_CreateTextFormat                             (IDWriteFactory8* this, const WCHAR* fontFamilyName, IDWriteFontCollection* fontCollection, DWRITE_FONT_WEIGHT fontWeight, DWRITE_FONT_STYLE fontStyle, DWRITE_FONT_STRETCH fontStretch, FLOAT fontSize, const WCHAR* localeName, IDWriteTextFormat** textFormat) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const WCHAR*, IDWriteFontCollection*, DWRITE_FONT_WEIGHT, DWRITE_FONT_STYLE, DWRITE_FONT_STRETCH, FLOAT, const WCHAR*, IDWriteTextFormat**))this->v->tbl[15])(this, fontFamilyName, fontCollection, fontWeight, fontStyle, fontStretch, fontSize, localeName, textFormat); }
+static inline HRESULT                           IDWriteFactory8_CreateTypography                             (IDWriteFactory8* this, IDWriteTypography** typography) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteTypography**))this->v->tbl[16])(this, typography); }
+static inline HRESULT                           IDWriteFactory8_GetGdiInterop                                (IDWriteFactory8* this, IDWriteGdiInterop** gdiInterop) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteGdiInterop**))this->v->tbl[17])(this, gdiInterop); }
+static inline HRESULT                           IDWriteFactory8_CreateTextLayout                             (IDWriteFactory8* this, const WCHAR* string, UINT32 stringLength, IDWriteTextFormat* textFormat, FLOAT maxWidth, FLOAT maxHeight, IDWriteTextLayout** textLayout) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const WCHAR*, UINT32, IDWriteTextFormat*, FLOAT, FLOAT, IDWriteTextLayout**))this->v->tbl[18])(this, string, stringLength, textFormat, maxWidth, maxHeight, textLayout); }
+static inline HRESULT                           IDWriteFactory8_CreateGdiCompatibleTextLayout                (IDWriteFactory8* this, const WCHAR* string, UINT32 stringLength, IDWriteTextFormat* textFormat, FLOAT layoutWidth, FLOAT layoutHeight, FLOAT pixelsPerDip, const DWRITE_MATRIX* transform, BOOL useGdiNatural, IDWriteTextLayout** textLayout) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const WCHAR*, UINT32, IDWriteTextFormat*, FLOAT, FLOAT, FLOAT, const DWRITE_MATRIX*, BOOL, IDWriteTextLayout**))this->v->tbl[19])(this, string, stringLength, textFormat, layoutWidth, layoutHeight, pixelsPerDip, transform, useGdiNatural, textLayout); }
+static inline HRESULT                           IDWriteFactory8_CreateEllipsisTrimmingSign                   (IDWriteFactory8* this, IDWriteTextFormat* textFormat, IDWriteInlineObject** trimmingSign) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteTextFormat*, IDWriteInlineObject**))this->v->tbl[20])(this, textFormat, trimmingSign); }
+static inline HRESULT                           IDWriteFactory8_CreateTextAnalyzer                           (IDWriteFactory8* this, IDWriteTextAnalyzer** textAnalyzer) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteTextAnalyzer**))this->v->tbl[21])(this, textAnalyzer); }
+static inline HRESULT                           IDWriteFactory8_CreateNumberSubstitution                     (IDWriteFactory8* this, DWRITE_NUMBER_SUBSTITUTION_METHOD substitutionMethod, const WCHAR* localeName, BOOL ignoreUserOverride, IDWriteNumberSubstitution** numberSubstitution) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, DWRITE_NUMBER_SUBSTITUTION_METHOD, const WCHAR*, BOOL, IDWriteNumberSubstitution**))this->v->tbl[22])(this, substitutionMethod, localeName, ignoreUserOverride, numberSubstitution); }
+static inline HRESULT                           IDWriteFactory8_CreateGlyphRunAnalysis                       (IDWriteFactory8* this, const DWRITE_GLYPH_RUN* glyphRun, FLOAT pixelsPerDip, const DWRITE_MATRIX* transform, DWRITE_RENDERING_MODE renderingMode, DWRITE_MEASURING_MODE measuringMode, FLOAT baselineOriginX, FLOAT baselineOriginY, IDWriteGlyphRunAnalysis** glyphRunAnalysis) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const DWRITE_GLYPH_RUN*, FLOAT, const DWRITE_MATRIX*, DWRITE_RENDERING_MODE, DWRITE_MEASURING_MODE, FLOAT, FLOAT, IDWriteGlyphRunAnalysis**))this->v->tbl[23])(this, glyphRun, pixelsPerDip, transform, renderingMode, measuringMode, baselineOriginX, baselineOriginY, glyphRunAnalysis); }
+static inline HRESULT                           IDWriteFactory8_GetEudcFontCollection                        (IDWriteFactory8* this, IDWriteFontCollection** fontCollection, BOOL checkForUpdates) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontCollection**, BOOL))this->v->tbl[24])(this, fontCollection, checkForUpdates); }
+static inline HRESULT                           IDWriteFactory8_CreateCustomRenderingParams1                 (IDWriteFactory8* this, FLOAT gamma, FLOAT enhancedContrast, FLOAT enhancedContrastGrayscale, FLOAT clearTypeLevel, DWRITE_PIXEL_GEOMETRY pixelGeometry, DWRITE_RENDERING_MODE renderingMode, IDWriteRenderingParams1** renderingParams) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, FLOAT, FLOAT, FLOAT, FLOAT, DWRITE_PIXEL_GEOMETRY, DWRITE_RENDERING_MODE, IDWriteRenderingParams1**))this->v->tbl[25])(this, gamma, enhancedContrast, enhancedContrastGrayscale, clearTypeLevel, pixelGeometry, renderingMode, renderingParams); }
+static inline HRESULT                           IDWriteFactory8_GetSystemFontFallback                        (IDWriteFactory8* this, IDWriteFontFallback** fontFallback) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontFallback**))this->v->tbl[26])(this, fontFallback); }
+static inline HRESULT                           IDWriteFactory8_CreateFontFallbackBuilder                    (IDWriteFactory8* this, IDWriteFontFallbackBuilder** fontFallbackBuilder) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontFallbackBuilder**))this->v->tbl[27])(this, fontFallbackBuilder); }
+static inline HRESULT                           IDWriteFactory8_TranslateColorGlyphRun                       (IDWriteFactory8* this, FLOAT baselineOriginX, FLOAT baselineOriginY, const DWRITE_GLYPH_RUN* glyphRun, const DWRITE_GLYPH_RUN_DESCRIPTION* glyphRunDescription, DWRITE_MEASURING_MODE measuringMode, const DWRITE_MATRIX* worldToDeviceTransform, UINT32 colorPaletteIndex, IDWriteColorGlyphRunEnumerator** colorLayers) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, FLOAT, FLOAT, const DWRITE_GLYPH_RUN*, const DWRITE_GLYPH_RUN_DESCRIPTION*, DWRITE_MEASURING_MODE, const DWRITE_MATRIX*, UINT32, IDWriteColorGlyphRunEnumerator**))this->v->tbl[28])(this, baselineOriginX, baselineOriginY, glyphRun, glyphRunDescription, measuringMode, worldToDeviceTransform, colorPaletteIndex, colorLayers); }
+static inline HRESULT                           IDWriteFactory8_CreateCustomRenderingParams2                 (IDWriteFactory8* this, FLOAT gamma, FLOAT enhancedContrast, FLOAT grayscaleEnhancedContrast, FLOAT clearTypeLevel, DWRITE_PIXEL_GEOMETRY pixelGeometry, DWRITE_RENDERING_MODE renderingMode, DWRITE_GRID_FIT_MODE gridFitMode, IDWriteRenderingParams2** renderingParams) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, FLOAT, FLOAT, FLOAT, FLOAT, DWRITE_PIXEL_GEOMETRY, DWRITE_RENDERING_MODE, DWRITE_GRID_FIT_MODE, IDWriteRenderingParams2**))this->v->tbl[29])(this, gamma, enhancedContrast, grayscaleEnhancedContrast, clearTypeLevel, pixelGeometry, renderingMode, gridFitMode, renderingParams); }
+static inline HRESULT                           IDWriteFactory8_CreateGlyphRunAnalysis1                      (IDWriteFactory8* this, const DWRITE_GLYPH_RUN* glyphRun, const DWRITE_MATRIX* transform, DWRITE_RENDERING_MODE renderingMode, DWRITE_MEASURING_MODE measuringMode, DWRITE_GRID_FIT_MODE gridFitMode, DWRITE_TEXT_ANTIALIAS_MODE antialiasMode, FLOAT baselineOriginX, FLOAT baselineOriginY, IDWriteGlyphRunAnalysis** glyphRunAnalysis) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const DWRITE_GLYPH_RUN*, const DWRITE_MATRIX*, DWRITE_RENDERING_MODE, DWRITE_MEASURING_MODE, DWRITE_GRID_FIT_MODE, DWRITE_TEXT_ANTIALIAS_MODE, FLOAT, FLOAT, IDWriteGlyphRunAnalysis**))this->v->tbl[30])(this, glyphRun, transform, renderingMode, measuringMode, gridFitMode, antialiasMode, baselineOriginX, baselineOriginY, glyphRunAnalysis); }
+static inline HRESULT                           IDWriteFactory8_CreateGlyphRunAnalysis2                      (IDWriteFactory8* this, const DWRITE_GLYPH_RUN* glyphRun, const DWRITE_MATRIX* transform, DWRITE_RENDERING_MODE1 renderingMode, DWRITE_MEASURING_MODE measuringMode, DWRITE_GRID_FIT_MODE gridFitMode, DWRITE_TEXT_ANTIALIAS_MODE antialiasMode, FLOAT baselineOriginX, FLOAT baselineOriginY, IDWriteGlyphRunAnalysis** glyphRunAnalysis) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const DWRITE_GLYPH_RUN*, const DWRITE_MATRIX*, DWRITE_RENDERING_MODE1, DWRITE_MEASURING_MODE, DWRITE_GRID_FIT_MODE, DWRITE_TEXT_ANTIALIAS_MODE, FLOAT, FLOAT, IDWriteGlyphRunAnalysis**))this->v->tbl[31])(this, glyphRun, transform, renderingMode, measuringMode, gridFitMode, antialiasMode, baselineOriginX, baselineOriginY, glyphRunAnalysis); }
+static inline HRESULT                           IDWriteFactory8_CreateCustomRenderingParams3                 (IDWriteFactory8* this, FLOAT gamma, FLOAT enhancedContrast, FLOAT grayscaleEnhancedContrast, FLOAT clearTypeLevel, DWRITE_PIXEL_GEOMETRY pixelGeometry, DWRITE_RENDERING_MODE1 renderingMode, DWRITE_GRID_FIT_MODE gridFitMode, IDWriteRenderingParams3** renderingParams) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, FLOAT, FLOAT, FLOAT, FLOAT, DWRITE_PIXEL_GEOMETRY, DWRITE_RENDERING_MODE1, DWRITE_GRID_FIT_MODE, IDWriteRenderingParams3**))this->v->tbl[32])(this, gamma, enhancedContrast, grayscaleEnhancedContrast, clearTypeLevel, pixelGeometry, renderingMode, gridFitMode, renderingParams); }
+static inline HRESULT                           IDWriteFactory8_CreateFontFaceReference                      (IDWriteFactory8* this, IDWriteFontFile* fontFile, UINT32 faceIndex, DWRITE_FONT_SIMULATIONS fontSimulations, IDWriteFontFaceReference** fontFaceReference) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontFile*, UINT32, DWRITE_FONT_SIMULATIONS, IDWriteFontFaceReference**))this->v->tbl[33])(this, fontFile, faceIndex, fontSimulations, fontFaceReference); }
+static inline HRESULT                           IDWriteFactory8_CreateFontFaceReference1                     (IDWriteFactory8* this, const WCHAR* filePath, const FILETIME* lastWriteTime, UINT32 faceIndex, DWRITE_FONT_SIMULATIONS fontSimulations, IDWriteFontFaceReference** fontFaceReference) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const WCHAR*, const FILETIME*, UINT32, DWRITE_FONT_SIMULATIONS, IDWriteFontFaceReference**))this->v->tbl[34])(this, filePath, lastWriteTime, faceIndex, fontSimulations, fontFaceReference); }
+static inline HRESULT                           IDWriteFactory8_GetSystemFontSet                             (IDWriteFactory8* this, IDWriteFontSet** fontSet) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontSet**))this->v->tbl[35])(this, fontSet); }
+static inline HRESULT                           IDWriteFactory8_CreateFontSetBuilder                         (IDWriteFactory8* this, IDWriteFontSetBuilder** fontSetBuilder) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontSetBuilder**))this->v->tbl[36])(this, fontSetBuilder); }
+static inline HRESULT                           IDWriteFactory8_CreateFontCollectionFromFontSet              (IDWriteFactory8* this, IDWriteFontSet* fontSet, IDWriteFontCollection1** fontCollection) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontSet*, IDWriteFontCollection1**))this->v->tbl[37])(this, fontSet, fontCollection); }
+static inline HRESULT                           IDWriteFactory8_GetSystemFontCollection1                     (IDWriteFactory8* this, BOOL includeDownloadableFonts, IDWriteFontCollection1** fontCollection, BOOL checkForUpdates) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, BOOL, IDWriteFontCollection1**, BOOL))this->v->tbl[38])(this, includeDownloadableFonts, fontCollection, checkForUpdates); }
+static inline HRESULT                           IDWriteFactory8_GetFontDownloadQueue                         (IDWriteFactory8* this, IDWriteFontDownloadQueue** fontDownloadQueue) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontDownloadQueue**))this->v->tbl[39])(this, fontDownloadQueue); }
+static inline HRESULT                           IDWriteFactory8_TranslateColorGlyphRun1                      (IDWriteFactory8* this, D2D_POINT_2F baselineOrigin, const DWRITE_GLYPH_RUN* glyphRun, const DWRITE_GLYPH_RUN_DESCRIPTION* glyphRunDescription, enum DWRITE_GLYPH_IMAGE_FORMATS desiredGlyphImageFormats, DWRITE_MEASURING_MODE measuringMode, const DWRITE_MATRIX* worldAndDpiTransform, UINT32 colorPaletteIndex, IDWriteColorGlyphRunEnumerator1** colorLayers) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, D2D_POINT_2F, const DWRITE_GLYPH_RUN*, const DWRITE_GLYPH_RUN_DESCRIPTION*, enum DWRITE_GLYPH_IMAGE_FORMATS, DWRITE_MEASURING_MODE, const DWRITE_MATRIX*, UINT32, IDWriteColorGlyphRunEnumerator1**))this->v->tbl[40])(this, baselineOrigin, glyphRun, glyphRunDescription, desiredGlyphImageFormats, measuringMode, worldAndDpiTransform, colorPaletteIndex, colorLayers); }
+static inline HRESULT                           IDWriteFactory8_ComputeGlyphOrigins                          (IDWriteFactory8* this, const DWRITE_GLYPH_RUN* glyphRun, D2D_POINT_2F baselineOrigin, D2D_POINT_2F* glyphOrigins) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const DWRITE_GLYPH_RUN*, D2D_POINT_2F, D2D_POINT_2F*))this->v->tbl[41])(this, glyphRun, baselineOrigin, glyphOrigins); }
+static inline HRESULT                           IDWriteFactory8_ComputeGlyphOrigins1                         (IDWriteFactory8* this, const DWRITE_GLYPH_RUN* glyphRun, DWRITE_MEASURING_MODE measuringMode, D2D_POINT_2F baselineOrigin, const DWRITE_MATRIX* worldAndDpiTransform, D2D_POINT_2F* glyphOrigins) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const DWRITE_GLYPH_RUN*, DWRITE_MEASURING_MODE, D2D_POINT_2F, const DWRITE_MATRIX*, D2D_POINT_2F*))this->v->tbl[42])(this, glyphRun, measuringMode, baselineOrigin, worldAndDpiTransform, glyphOrigins); }
+static inline HRESULT                           IDWriteFactory8_CreateFontSetBuilder1                        (IDWriteFactory8* this, IDWriteFontSetBuilder1** fontSetBuilder) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontSetBuilder1**))this->v->tbl[43])(this, fontSetBuilder); }
+static inline HRESULT                           IDWriteFactory8_CreateInMemoryFontFileLoader                 (IDWriteFactory8* this, IDWriteInMemoryFontFileLoader** newLoader) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteInMemoryFontFileLoader**))this->v->tbl[44])(this, newLoader); }
+static inline HRESULT                           IDWriteFactory8_CreateHttpFontFileLoader                     (IDWriteFactory8* this, const WCHAR* referrerUrl, const WCHAR* extraHeaders, IDWriteRemoteFontFileLoader** newLoader) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const WCHAR*, const WCHAR*, IDWriteRemoteFontFileLoader**))this->v->tbl[45])(this, referrerUrl, extraHeaders, newLoader); }
+static inline DWRITE_CONTAINER_TYPE             IDWriteFactory8_AnalyzeContainerType                         (IDWriteFactory8* this, const void* fileData, UINT32 fileDataSize) { return ((DWRITE_CONTAINER_TYPE (WINAPI*)(IDWriteFactory8*, const void*, UINT32))this->v->tbl[46])(this, fileData, fileDataSize); }
+static inline HRESULT                           IDWriteFactory8_UnpackFontFile                               (IDWriteFactory8* this, DWRITE_CONTAINER_TYPE containerType, const void* fileData, UINT32 fileDataSize, IDWriteFontFileStream** unpackedFontStream) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, DWRITE_CONTAINER_TYPE, const void*, UINT32, IDWriteFontFileStream**))this->v->tbl[47])(this, containerType, fileData, fileDataSize, unpackedFontStream); }
+static inline HRESULT                           IDWriteFactory8_CreateFontFaceReference2                     (IDWriteFactory8* this, IDWriteFontFile* fontFile, UINT32 faceIndex, DWRITE_FONT_SIMULATIONS fontSimulations, const DWRITE_FONT_AXIS_VALUE* fontAxisValues, UINT32 fontAxisValueCount, IDWriteFontFaceReference1** fontFaceReference) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontFile*, UINT32, DWRITE_FONT_SIMULATIONS, const DWRITE_FONT_AXIS_VALUE*, UINT32, IDWriteFontFaceReference1**))this->v->tbl[48])(this, fontFile, faceIndex, fontSimulations, fontAxisValues, fontAxisValueCount, fontFaceReference); }
+static inline HRESULT                           IDWriteFactory8_CreateFontResource                           (IDWriteFactory8* this, IDWriteFontFile* fontFile, UINT32 faceIndex, IDWriteFontResource** fontResource) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontFile*, UINT32, IDWriteFontResource**))this->v->tbl[49])(this, fontFile, faceIndex, fontResource); }
+static inline HRESULT                           IDWriteFactory8_GetSystemFontSet1                            (IDWriteFactory8* this, BOOL includeDownloadableFonts, IDWriteFontSet1** fontSet) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, BOOL, IDWriteFontSet1**))this->v->tbl[50])(this, includeDownloadableFonts, fontSet); }
+static inline HRESULT                           IDWriteFactory8_GetSystemFontCollection2                     (IDWriteFactory8* this, BOOL includeDownloadableFonts, DWRITE_FONT_FAMILY_MODEL fontFamilyModel, IDWriteFontCollection2** fontCollection) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, BOOL, DWRITE_FONT_FAMILY_MODEL, IDWriteFontCollection2**))this->v->tbl[51])(this, includeDownloadableFonts, fontFamilyModel, fontCollection); }
+static inline HRESULT                           IDWriteFactory8_CreateFontCollectionFromFontSet1             (IDWriteFactory8* this, IDWriteFontSet* fontSet, DWRITE_FONT_FAMILY_MODEL fontFamilyModel, IDWriteFontCollection2** fontCollection) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontSet*, DWRITE_FONT_FAMILY_MODEL, IDWriteFontCollection2**))this->v->tbl[52])(this, fontSet, fontFamilyModel, fontCollection); }
+static inline HRESULT                           IDWriteFactory8_CreateFontSetBuilder2                        (IDWriteFactory8* this, IDWriteFontSetBuilder2** fontSetBuilder) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, IDWriteFontSetBuilder2**))this->v->tbl[53])(this, fontSetBuilder); }
+static inline HRESULT                           IDWriteFactory8_CreateTextFormat1                            (IDWriteFactory8* this, const WCHAR* fontFamilyName, IDWriteFontCollection* fontCollection, const DWRITE_FONT_AXIS_VALUE* fontAxisValues, UINT32 fontAxisValueCount, FLOAT fontSize, const WCHAR* localeName, IDWriteTextFormat3** textFormat) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, const WCHAR*, IDWriteFontCollection*, const DWRITE_FONT_AXIS_VALUE*, UINT32, FLOAT, const WCHAR*, IDWriteTextFormat3**))this->v->tbl[54])(this, fontFamilyName, fontCollection, fontAxisValues, fontAxisValueCount, fontSize, localeName, textFormat); }
+static inline HRESULT                           IDWriteFactory8_GetSystemFontSet2                            (IDWriteFactory8* this, BOOL includeDownloadableFonts, IDWriteFontSet2** fontSet) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, BOOL, IDWriteFontSet2**))this->v->tbl[55])(this, includeDownloadableFonts, fontSet); }
+static inline HRESULT                           IDWriteFactory8_GetSystemFontCollection3                     (IDWriteFactory8* this, BOOL includeDownloadableFonts, DWRITE_FONT_FAMILY_MODEL fontFamilyModel, IDWriteFontCollection3** fontCollection) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, BOOL, DWRITE_FONT_FAMILY_MODEL, IDWriteFontCollection3**))this->v->tbl[56])(this, includeDownloadableFonts, fontFamilyModel, fontCollection); }
+static inline HRESULT                           IDWriteFactory8_TranslateColorGlyphRun2                      (IDWriteFactory8* this, D2D_POINT_2F baselineOrigin, const DWRITE_GLYPH_RUN* glyphRun, const DWRITE_GLYPH_RUN_DESCRIPTION* glyphRunDescription, enum DWRITE_GLYPH_IMAGE_FORMATS desiredGlyphImageFormats, DWRITE_PAINT_FEATURE_LEVEL paintFeatureLevel, DWRITE_MEASURING_MODE measuringMode, const DWRITE_MATRIX* worldAndDpiTransform, UINT32 colorPaletteIndex, IDWriteColorGlyphRunEnumerator1** colorEnumerator) { return ((HRESULT (WINAPI*)(IDWriteFactory8*, D2D_POINT_2F, const DWRITE_GLYPH_RUN*, const DWRITE_GLYPH_RUN_DESCRIPTION*, enum DWRITE_GLYPH_IMAGE_FORMATS, DWRITE_PAINT_FEATURE_LEVEL, DWRITE_MEASURING_MODE, const DWRITE_MATRIX*, UINT32, IDWriteColorGlyphRunEnumerator1**))this->v->tbl[57])(this, baselineOrigin, glyphRun, glyphRunDescription, desiredGlyphImageFormats, paintFeatureLevel, measuringMode, worldAndDpiTransform, colorPaletteIndex, colorEnumerator); }
 
 static inline HRESULT                           IDWriteFont_QueryInterface                                   (IDWriteFont* this, const GUID* riid, void** ppvObject) { return ((HRESULT (WINAPI*)(IDWriteFont*, const GUID*, void**))this->v->tbl[0])(this, riid, ppvObject); }
 static inline UINT32                            IDWriteFont_AddRef                                           (IDWriteFont* this) { return ((UINT32 (WINAPI*)(IDWriteFont*))this->v->tbl[1])(this); }
@@ -2096,6 +2319,69 @@ static inline BOOL                              IDWriteFontFace6_Equals         
 static inline HRESULT                           IDWriteFontFace6_GetFamilyNames1                             (IDWriteFontFace6* this, DWRITE_FONT_FAMILY_MODEL fontFamilyModel, IDWriteLocalizedStrings** names) { return ((HRESULT (WINAPI*)(IDWriteFontFace6*, DWRITE_FONT_FAMILY_MODEL, IDWriteLocalizedStrings**))this->v->tbl[58])(this, fontFamilyModel, names); }
 static inline HRESULT                           IDWriteFontFace6_GetFaceNames1                               (IDWriteFontFace6* this, DWRITE_FONT_FAMILY_MODEL fontFamilyModel, IDWriteLocalizedStrings** names) { return ((HRESULT (WINAPI*)(IDWriteFontFace6*, DWRITE_FONT_FAMILY_MODEL, IDWriteLocalizedStrings**))this->v->tbl[59])(this, fontFamilyModel, names); }
 
+static inline HRESULT                           IDWriteFontFace7_QueryInterface                              (IDWriteFontFace7* this, const GUID* riid, void** ppvObject) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, const GUID*, void**))this->v->tbl[0])(this, riid, ppvObject); }
+static inline UINT32                            IDWriteFontFace7_AddRef                                      (IDWriteFontFace7* this) { return ((UINT32 (WINAPI*)(IDWriteFontFace7*))this->v->tbl[1])(this); }
+static inline UINT32                            IDWriteFontFace7_Release                                     (IDWriteFontFace7* this) { return ((UINT32 (WINAPI*)(IDWriteFontFace7*))this->v->tbl[2])(this); }
+static inline DWRITE_FONT_FACE_TYPE             IDWriteFontFace7_GetType                                     (IDWriteFontFace7* this) { return ((DWRITE_FONT_FACE_TYPE (WINAPI*)(IDWriteFontFace7*))this->v->tbl[3])(this); }
+static inline HRESULT                           IDWriteFontFace7_GetFiles                                    (IDWriteFontFace7* this, UINT32* numberOfFiles, IDWriteFontFile** fontFiles) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, UINT32*, IDWriteFontFile**))this->v->tbl[4])(this, numberOfFiles, fontFiles); }
+static inline UINT32                            IDWriteFontFace7_GetIndex                                    (IDWriteFontFace7* this) { return ((UINT32 (WINAPI*)(IDWriteFontFace7*))this->v->tbl[5])(this); }
+static inline DWRITE_FONT_SIMULATIONS           IDWriteFontFace7_GetSimulations                              (IDWriteFontFace7* this) { return ((DWRITE_FONT_SIMULATIONS (WINAPI*)(IDWriteFontFace7*))this->v->tbl[6])(this); }
+static inline BOOL                              IDWriteFontFace7_IsSymbolFont                                (IDWriteFontFace7* this) { return ((BOOL (WINAPI*)(IDWriteFontFace7*))this->v->tbl[7])(this); }
+static inline void                              IDWriteFontFace7_GetMetrics                                  (IDWriteFontFace7* this, DWRITE_FONT_METRICS* fontFaceMetrics) { ((void (WINAPI*)(IDWriteFontFace7*, DWRITE_FONT_METRICS*))this->v->tbl[8])(this, fontFaceMetrics); }
+static inline UINT16                            IDWriteFontFace7_GetGlyphCount                               (IDWriteFontFace7* this) { return ((UINT16 (WINAPI*)(IDWriteFontFace7*))this->v->tbl[9])(this); }
+static inline HRESULT                           IDWriteFontFace7_GetDesignGlyphMetrics                       (IDWriteFontFace7* this, const UINT16* glyphIndices, UINT32 glyphCount, DWRITE_GLYPH_METRICS* glyphMetrics, BOOL isSideways) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, const UINT16*, UINT32, DWRITE_GLYPH_METRICS*, BOOL))this->v->tbl[10])(this, glyphIndices, glyphCount, glyphMetrics, isSideways); }
+static inline HRESULT                           IDWriteFontFace7_GetGlyphIndices                             (IDWriteFontFace7* this, const UINT32* codePoints, UINT32 codePointCount, UINT16* glyphIndices) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, const UINT32*, UINT32, UINT16*))this->v->tbl[11])(this, codePoints, codePointCount, glyphIndices); }
+static inline HRESULT                           IDWriteFontFace7_TryGetFontTable                             (IDWriteFontFace7* this, UINT32 openTypeTableTag, const void** tableData, UINT32* tableSize, void** tableContext, BOOL* exists) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, UINT32, const void**, UINT32*, void**, BOOL*))this->v->tbl[12])(this, openTypeTableTag, tableData, tableSize, tableContext, exists); }
+static inline void                              IDWriteFontFace7_ReleaseFontTable                            (IDWriteFontFace7* this, void* tableContext) { ((void (WINAPI*)(IDWriteFontFace7*, void*))this->v->tbl[13])(this, tableContext); }
+static inline HRESULT                           IDWriteFontFace7_GetGlyphRunOutline                          (IDWriteFontFace7* this, FLOAT emSize, const UINT16* glyphIndices, const FLOAT* glyphAdvances, const DWRITE_GLYPH_OFFSET* glyphOffsets, UINT32 glyphCount, BOOL isSideways, BOOL isRightToLeft, ID2D1SimplifiedGeometrySink* geometrySink) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, FLOAT, const UINT16*, const FLOAT*, const DWRITE_GLYPH_OFFSET*, UINT32, BOOL, BOOL, ID2D1SimplifiedGeometrySink*))this->v->tbl[14])(this, emSize, glyphIndices, glyphAdvances, glyphOffsets, glyphCount, isSideways, isRightToLeft, geometrySink); }
+static inline HRESULT                           IDWriteFontFace7_GetRecommendedRenderingMode                 (IDWriteFontFace7* this, FLOAT emSize, FLOAT pixelsPerDip, DWRITE_MEASURING_MODE measuringMode, IDWriteRenderingParams* renderingParams, DWRITE_RENDERING_MODE* renderingMode) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, FLOAT, FLOAT, DWRITE_MEASURING_MODE, IDWriteRenderingParams*, DWRITE_RENDERING_MODE*))this->v->tbl[15])(this, emSize, pixelsPerDip, measuringMode, renderingParams, renderingMode); }
+static inline HRESULT                           IDWriteFontFace7_GetGdiCompatibleMetrics                     (IDWriteFontFace7* this, FLOAT emSize, FLOAT pixelsPerDip, const DWRITE_MATRIX* transform, DWRITE_FONT_METRICS* fontFaceMetrics) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, FLOAT, FLOAT, const DWRITE_MATRIX*, DWRITE_FONT_METRICS*))this->v->tbl[16])(this, emSize, pixelsPerDip, transform, fontFaceMetrics); }
+static inline HRESULT                           IDWriteFontFace7_GetGdiCompatibleGlyphMetrics                (IDWriteFontFace7* this, FLOAT emSize, FLOAT pixelsPerDip, const DWRITE_MATRIX* transform, BOOL useGdiNatural, const UINT16* glyphIndices, UINT32 glyphCount, DWRITE_GLYPH_METRICS* glyphMetrics, BOOL isSideways) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, FLOAT, FLOAT, const DWRITE_MATRIX*, BOOL, const UINT16*, UINT32, DWRITE_GLYPH_METRICS*, BOOL))this->v->tbl[17])(this, emSize, pixelsPerDip, transform, useGdiNatural, glyphIndices, glyphCount, glyphMetrics, isSideways); }
+static inline void                              IDWriteFontFace7_GetMetrics1                                 (IDWriteFontFace7* this, DWRITE_FONT_METRICS1* fontMetrics) { ((void (WINAPI*)(IDWriteFontFace7*, DWRITE_FONT_METRICS1*))this->v->tbl[18])(this, fontMetrics); }
+static inline HRESULT                           IDWriteFontFace7_GetGdiCompatibleMetrics1                    (IDWriteFontFace7* this, FLOAT emSize, FLOAT pixelsPerDip, const DWRITE_MATRIX* transform, DWRITE_FONT_METRICS1* fontMetrics) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, FLOAT, FLOAT, const DWRITE_MATRIX*, DWRITE_FONT_METRICS1*))this->v->tbl[19])(this, emSize, pixelsPerDip, transform, fontMetrics); }
+static inline void                              IDWriteFontFace7_GetCaretMetrics                             (IDWriteFontFace7* this, DWRITE_CARET_METRICS* caretMetrics) { ((void (WINAPI*)(IDWriteFontFace7*, DWRITE_CARET_METRICS*))this->v->tbl[20])(this, caretMetrics); }
+static inline HRESULT                           IDWriteFontFace7_GetUnicodeRanges                            (IDWriteFontFace7* this, UINT32 maxRangeCount, DWRITE_UNICODE_RANGE* unicodeRanges, UINT32* actualRangeCount) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, UINT32, DWRITE_UNICODE_RANGE*, UINT32*))this->v->tbl[21])(this, maxRangeCount, unicodeRanges, actualRangeCount); }
+static inline BOOL                              IDWriteFontFace7_IsMonospacedFont                            (IDWriteFontFace7* this) { return ((BOOL (WINAPI*)(IDWriteFontFace7*))this->v->tbl[22])(this); }
+static inline HRESULT                           IDWriteFontFace7_GetDesignGlyphAdvances                      (IDWriteFontFace7* this, UINT32 glyphCount, const UINT16* glyphIndices, INT32* glyphAdvances, BOOL isSideways) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, UINT32, const UINT16*, INT32*, BOOL))this->v->tbl[23])(this, glyphCount, glyphIndices, glyphAdvances, isSideways); }
+static inline HRESULT                           IDWriteFontFace7_GetGdiCompatibleGlyphAdvances               (IDWriteFontFace7* this, FLOAT emSize, FLOAT pixelsPerDip, const DWRITE_MATRIX* transform, BOOL useGdiNatural, BOOL isSideways, UINT32 glyphCount, const UINT16* glyphIndices, INT32* glyphAdvances) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, FLOAT, FLOAT, const DWRITE_MATRIX*, BOOL, BOOL, UINT32, const UINT16*, INT32*))this->v->tbl[24])(this, emSize, pixelsPerDip, transform, useGdiNatural, isSideways, glyphCount, glyphIndices, glyphAdvances); }
+static inline HRESULT                           IDWriteFontFace7_GetKerningPairAdjustments                   (IDWriteFontFace7* this, UINT32 glyphCount, const UINT16* glyphIndices, INT32* glyphAdvanceAdjustments) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, UINT32, const UINT16*, INT32*))this->v->tbl[25])(this, glyphCount, glyphIndices, glyphAdvanceAdjustments); }
+static inline BOOL                              IDWriteFontFace7_HasKerningPairs                             (IDWriteFontFace7* this) { return ((BOOL (WINAPI*)(IDWriteFontFace7*))this->v->tbl[26])(this); }
+static inline HRESULT                           IDWriteFontFace7_GetRecommendedRenderingMode1                (IDWriteFontFace7* this, FLOAT fontEmSize, FLOAT dpiX, FLOAT dpiY, const DWRITE_MATRIX* transform, BOOL isSideways, DWRITE_OUTLINE_THRESHOLD outlineThreshold, DWRITE_MEASURING_MODE measuringMode, DWRITE_RENDERING_MODE* renderingMode) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, FLOAT, FLOAT, FLOAT, const DWRITE_MATRIX*, BOOL, DWRITE_OUTLINE_THRESHOLD, DWRITE_MEASURING_MODE, DWRITE_RENDERING_MODE*))this->v->tbl[27])(this, fontEmSize, dpiX, dpiY, transform, isSideways, outlineThreshold, measuringMode, renderingMode); }
+static inline HRESULT                           IDWriteFontFace7_GetVerticalGlyphVariants                    (IDWriteFontFace7* this, UINT32 glyphCount, const UINT16* nominalGlyphIndices, UINT16* verticalGlyphIndices) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, UINT32, const UINT16*, UINT16*))this->v->tbl[28])(this, glyphCount, nominalGlyphIndices, verticalGlyphIndices); }
+static inline BOOL                              IDWriteFontFace7_HasVerticalGlyphVariants                    (IDWriteFontFace7* this) { return ((BOOL (WINAPI*)(IDWriteFontFace7*))this->v->tbl[29])(this); }
+static inline BOOL                              IDWriteFontFace7_IsColorFont                                 (IDWriteFontFace7* this) { return ((BOOL (WINAPI*)(IDWriteFontFace7*))this->v->tbl[30])(this); }
+static inline UINT32                            IDWriteFontFace7_GetColorPaletteCount                        (IDWriteFontFace7* this) { return ((UINT32 (WINAPI*)(IDWriteFontFace7*))this->v->tbl[31])(this); }
+static inline UINT32                            IDWriteFontFace7_GetPaletteEntryCount                        (IDWriteFontFace7* this) { return ((UINT32 (WINAPI*)(IDWriteFontFace7*))this->v->tbl[32])(this); }
+static inline HRESULT                           IDWriteFontFace7_GetPaletteEntries                           (IDWriteFontFace7* this, UINT32 colorPaletteIndex, UINT32 firstEntryIndex, UINT32 entryCount, DWRITE_COLOR_F* paletteEntries) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, UINT32, UINT32, UINT32, DWRITE_COLOR_F*))this->v->tbl[33])(this, colorPaletteIndex, firstEntryIndex, entryCount, paletteEntries); }
+static inline HRESULT                           IDWriteFontFace7_GetRecommendedRenderingMode2                (IDWriteFontFace7* this, FLOAT fontEmSize, FLOAT dpiX, FLOAT dpiY, const DWRITE_MATRIX* transform, BOOL isSideways, DWRITE_OUTLINE_THRESHOLD outlineThreshold, DWRITE_MEASURING_MODE measuringMode, IDWriteRenderingParams* renderingParams, DWRITE_RENDERING_MODE* renderingMode, DWRITE_GRID_FIT_MODE* gridFitMode) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, FLOAT, FLOAT, FLOAT, const DWRITE_MATRIX*, BOOL, DWRITE_OUTLINE_THRESHOLD, DWRITE_MEASURING_MODE, IDWriteRenderingParams*, DWRITE_RENDERING_MODE*, DWRITE_GRID_FIT_MODE*))this->v->tbl[34])(this, fontEmSize, dpiX, dpiY, transform, isSideways, outlineThreshold, measuringMode, renderingParams, renderingMode, gridFitMode); }
+static inline HRESULT                           IDWriteFontFace7_GetFontFaceReference                        (IDWriteFontFace7* this, IDWriteFontFaceReference** fontFaceReference) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, IDWriteFontFaceReference**))this->v->tbl[35])(this, fontFaceReference); }
+static inline void                              IDWriteFontFace7_GetPanose                                   (IDWriteFontFace7* this, DWRITE_PANOSE* panose) { ((void (WINAPI*)(IDWriteFontFace7*, DWRITE_PANOSE*))this->v->tbl[36])(this, panose); }
+static inline DWRITE_FONT_WEIGHT                IDWriteFontFace7_GetWeight                                   (IDWriteFontFace7* this) { return ((DWRITE_FONT_WEIGHT (WINAPI*)(IDWriteFontFace7*))this->v->tbl[37])(this); }
+static inline DWRITE_FONT_STRETCH               IDWriteFontFace7_GetStretch                                  (IDWriteFontFace7* this) { return ((DWRITE_FONT_STRETCH (WINAPI*)(IDWriteFontFace7*))this->v->tbl[38])(this); }
+static inline DWRITE_FONT_STYLE                 IDWriteFontFace7_GetStyle                                    (IDWriteFontFace7* this) { return ((DWRITE_FONT_STYLE (WINAPI*)(IDWriteFontFace7*))this->v->tbl[39])(this); }
+static inline HRESULT                           IDWriteFontFace7_GetFamilyNames                              (IDWriteFontFace7* this, IDWriteLocalizedStrings** names) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, IDWriteLocalizedStrings**))this->v->tbl[40])(this, names); }
+static inline HRESULT                           IDWriteFontFace7_GetFaceNames                                (IDWriteFontFace7* this, IDWriteLocalizedStrings** names) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, IDWriteLocalizedStrings**))this->v->tbl[41])(this, names); }
+static inline HRESULT                           IDWriteFontFace7_GetInformationalStrings                     (IDWriteFontFace7* this, DWRITE_INFORMATIONAL_STRING_ID informationalStringID, IDWriteLocalizedStrings** informationalStrings, BOOL* exists) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, DWRITE_INFORMATIONAL_STRING_ID, IDWriteLocalizedStrings**, BOOL*))this->v->tbl[42])(this, informationalStringID, informationalStrings, exists); }
+static inline BOOL                              IDWriteFontFace7_HasCharacter                                (IDWriteFontFace7* this, UINT32 unicodeValue) { return ((BOOL (WINAPI*)(IDWriteFontFace7*, UINT32))this->v->tbl[43])(this, unicodeValue); }
+static inline HRESULT                           IDWriteFontFace7_GetRecommendedRenderingMode3                (IDWriteFontFace7* this, FLOAT fontEmSize, FLOAT dpiX, FLOAT dpiY, const DWRITE_MATRIX* transform, BOOL isSideways, DWRITE_OUTLINE_THRESHOLD outlineThreshold, DWRITE_MEASURING_MODE measuringMode, IDWriteRenderingParams* renderingParams, DWRITE_RENDERING_MODE1* renderingMode, DWRITE_GRID_FIT_MODE* gridFitMode) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, FLOAT, FLOAT, FLOAT, const DWRITE_MATRIX*, BOOL, DWRITE_OUTLINE_THRESHOLD, DWRITE_MEASURING_MODE, IDWriteRenderingParams*, DWRITE_RENDERING_MODE1*, DWRITE_GRID_FIT_MODE*))this->v->tbl[44])(this, fontEmSize, dpiX, dpiY, transform, isSideways, outlineThreshold, measuringMode, renderingParams, renderingMode, gridFitMode); }
+static inline BOOL                              IDWriteFontFace7_IsCharacterLocal                            (IDWriteFontFace7* this, UINT32 unicodeValue) { return ((BOOL (WINAPI*)(IDWriteFontFace7*, UINT32))this->v->tbl[45])(this, unicodeValue); }
+static inline BOOL                              IDWriteFontFace7_IsGlyphLocal                                (IDWriteFontFace7* this, UINT16 glyphId) { return ((BOOL (WINAPI*)(IDWriteFontFace7*, UINT16))this->v->tbl[46])(this, glyphId); }
+static inline HRESULT                           IDWriteFontFace7_AreCharactersLocal                          (IDWriteFontFace7* this, const WCHAR* characters, UINT32 characterCount, BOOL enqueueIfNotLocal, BOOL* isLocal) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, const WCHAR*, UINT32, BOOL, BOOL*))this->v->tbl[47])(this, characters, characterCount, enqueueIfNotLocal, isLocal); }
+static inline HRESULT                           IDWriteFontFace7_AreGlyphsLocal                              (IDWriteFontFace7* this, const UINT16* glyphIndices, UINT32 glyphCount, BOOL enqueueIfNotLocal, BOOL* isLocal) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, const UINT16*, UINT32, BOOL, BOOL*))this->v->tbl[48])(this, glyphIndices, glyphCount, enqueueIfNotLocal, isLocal); }
+static inline HRESULT                           IDWriteFontFace7_GetGlyphImageFormats                        (IDWriteFontFace7* this, UINT16 glyphId, UINT32 pixelsPerEmFirst, UINT32 pixelsPerEmLast, enum DWRITE_GLYPH_IMAGE_FORMATS* glyphImageFormats) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, UINT16, UINT32, UINT32, enum DWRITE_GLYPH_IMAGE_FORMATS*))this->v->tbl[49])(this, glyphId, pixelsPerEmFirst, pixelsPerEmLast, glyphImageFormats); }
+static inline enum DWRITE_GLYPH_IMAGE_FORMATS   IDWriteFontFace7_GetGlyphImageFormats1                       (IDWriteFontFace7* this) { return ((enum DWRITE_GLYPH_IMAGE_FORMATS (WINAPI*)(IDWriteFontFace7*))this->v->tbl[50])(this); }
+static inline HRESULT                           IDWriteFontFace7_GetGlyphImageData                           (IDWriteFontFace7* this, UINT16 glyphId, UINT32 pixelsPerEm, enum DWRITE_GLYPH_IMAGE_FORMATS glyphImageFormat, DWRITE_GLYPH_IMAGE_DATA* glyphData, void** glyphDataContext) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, UINT16, UINT32, enum DWRITE_GLYPH_IMAGE_FORMATS, DWRITE_GLYPH_IMAGE_DATA*, void**))this->v->tbl[51])(this, glyphId, pixelsPerEm, glyphImageFormat, glyphData, glyphDataContext); }
+static inline void                              IDWriteFontFace7_ReleaseGlyphImageData                       (IDWriteFontFace7* this, void* glyphDataContext) { ((void (WINAPI*)(IDWriteFontFace7*, void*))this->v->tbl[52])(this, glyphDataContext); }
+static inline UINT32                            IDWriteFontFace7_GetFontAxisValueCount                       (IDWriteFontFace7* this) { return ((UINT32 (WINAPI*)(IDWriteFontFace7*))this->v->tbl[53])(this); }
+static inline HRESULT                           IDWriteFontFace7_GetFontAxisValues                           (IDWriteFontFace7* this, DWRITE_FONT_AXIS_VALUE* fontAxisValues, UINT32 fontAxisValueCount) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, DWRITE_FONT_AXIS_VALUE*, UINT32))this->v->tbl[54])(this, fontAxisValues, fontAxisValueCount); }
+static inline BOOL                              IDWriteFontFace7_HasVariations                               (IDWriteFontFace7* this) { return ((BOOL (WINAPI*)(IDWriteFontFace7*))this->v->tbl[55])(this); }
+static inline HRESULT                           IDWriteFontFace7_GetFontResource                             (IDWriteFontFace7* this, IDWriteFontResource** fontResource) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, IDWriteFontResource**))this->v->tbl[56])(this, fontResource); }
+static inline BOOL                              IDWriteFontFace7_Equals                                      (IDWriteFontFace7* this, IDWriteFontFace* fontFace) { return ((BOOL (WINAPI*)(IDWriteFontFace7*, IDWriteFontFace*))this->v->tbl[57])(this, fontFace); }
+static inline HRESULT                           IDWriteFontFace7_GetFamilyNames1                             (IDWriteFontFace7* this, DWRITE_FONT_FAMILY_MODEL fontFamilyModel, IDWriteLocalizedStrings** names) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, DWRITE_FONT_FAMILY_MODEL, IDWriteLocalizedStrings**))this->v->tbl[58])(this, fontFamilyModel, names); }
+static inline HRESULT                           IDWriteFontFace7_GetFaceNames1                               (IDWriteFontFace7* this, DWRITE_FONT_FAMILY_MODEL fontFamilyModel, IDWriteLocalizedStrings** names) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, DWRITE_FONT_FAMILY_MODEL, IDWriteLocalizedStrings**))this->v->tbl[59])(this, fontFamilyModel, names); }
+static inline DWRITE_PAINT_FEATURE_LEVEL        IDWriteFontFace7_GetPaintFeatureLevel                        (IDWriteFontFace7* this, enum DWRITE_GLYPH_IMAGE_FORMATS glyphImageFormat) { return ((DWRITE_PAINT_FEATURE_LEVEL (WINAPI*)(IDWriteFontFace7*, enum DWRITE_GLYPH_IMAGE_FORMATS))this->v->tbl[60])(this, glyphImageFormat); }
+static inline HRESULT                           IDWriteFontFace7_CreatePaintReader                           (IDWriteFontFace7* this, enum DWRITE_GLYPH_IMAGE_FORMATS glyphImageFormat, DWRITE_PAINT_FEATURE_LEVEL paintFeatureLevel, IDWritePaintReader** paintReader) { return ((HRESULT (WINAPI*)(IDWriteFontFace7*, enum DWRITE_GLYPH_IMAGE_FORMATS, DWRITE_PAINT_FEATURE_LEVEL, IDWritePaintReader**))this->v->tbl[61])(this, glyphImageFormat, paintFeatureLevel, paintReader); }
+
 static inline HRESULT                           IDWriteFontFaceReference_QueryInterface                      (IDWriteFontFaceReference* this, const GUID* riid, void** ppvObject) { return ((HRESULT (WINAPI*)(IDWriteFontFaceReference*, const GUID*, void**))this->v->tbl[0])(this, riid, ppvObject); }
 static inline UINT32                            IDWriteFontFaceReference_AddRef                              (IDWriteFontFaceReference* this) { return ((UINT32 (WINAPI*)(IDWriteFontFaceReference*))this->v->tbl[1])(this); }
 static inline UINT32                            IDWriteFontFaceReference_Release                             (IDWriteFontFaceReference* this) { return ((UINT32 (WINAPI*)(IDWriteFontFaceReference*))this->v->tbl[2])(this); }
@@ -2487,6 +2773,19 @@ static inline HRESULT                           IDWriteLocalizedStrings_GetStrin
 static inline HRESULT                           IDWriteNumberSubstitution_QueryInterface                     (IDWriteNumberSubstitution* this, const GUID* riid, void** ppvObject) { return ((HRESULT (WINAPI*)(IDWriteNumberSubstitution*, const GUID*, void**))this->v->tbl[0])(this, riid, ppvObject); }
 static inline UINT32                            IDWriteNumberSubstitution_AddRef                             (IDWriteNumberSubstitution* this) { return ((UINT32 (WINAPI*)(IDWriteNumberSubstitution*))this->v->tbl[1])(this); }
 static inline UINT32                            IDWriteNumberSubstitution_Release                            (IDWriteNumberSubstitution* this) { return ((UINT32 (WINAPI*)(IDWriteNumberSubstitution*))this->v->tbl[2])(this); }
+
+static inline HRESULT                           IDWritePaintReader_QueryInterface                            (IDWritePaintReader* this, const GUID* riid, void** ppvObject) { return ((HRESULT (WINAPI*)(IDWritePaintReader*, const GUID*, void**))this->v->tbl[0])(this, riid, ppvObject); }
+static inline UINT32                            IDWritePaintReader_AddRef                                    (IDWritePaintReader* this) { return ((UINT32 (WINAPI*)(IDWritePaintReader*))this->v->tbl[1])(this); }
+static inline UINT32                            IDWritePaintReader_Release                                   (IDWritePaintReader* this) { return ((UINT32 (WINAPI*)(IDWritePaintReader*))this->v->tbl[2])(this); }
+static inline HRESULT                           IDWritePaintReader_SetCurrentGlyph                           (IDWritePaintReader* this, UINT32 glyphIndex, DWRITE_PAINT_ELEMENT* paintElement, UINT32 structSize, D2D_RECT_F* clipBox, DWRITE_PAINT_ATTRIBUTES* glyphAttributes) { return ((HRESULT (WINAPI*)(IDWritePaintReader*, UINT32, DWRITE_PAINT_ELEMENT*, UINT32, D2D_RECT_F*, DWRITE_PAINT_ATTRIBUTES*))this->v->tbl[3])(this, glyphIndex, paintElement, structSize, clipBox, glyphAttributes); }
+static inline HRESULT                           IDWritePaintReader_SetTextColor                              (IDWritePaintReader* this, const DWRITE_COLOR_F* textColor) { return ((HRESULT (WINAPI*)(IDWritePaintReader*, const DWRITE_COLOR_F*))this->v->tbl[4])(this, textColor); }
+static inline HRESULT                           IDWritePaintReader_SetColorPaletteIndex                      (IDWritePaintReader* this, UINT32 colorPaletteIndex) { return ((HRESULT (WINAPI*)(IDWritePaintReader*, UINT32))this->v->tbl[5])(this, colorPaletteIndex); }
+static inline HRESULT                           IDWritePaintReader_SetCustomColorPalette                     (IDWritePaintReader* this, const DWRITE_COLOR_F* paletteEntries, UINT32 paletteEntryCount) { return ((HRESULT (WINAPI*)(IDWritePaintReader*, const DWRITE_COLOR_F*, UINT32))this->v->tbl[6])(this, paletteEntries, paletteEntryCount); }
+static inline HRESULT                           IDWritePaintReader_MoveToFirstChild                          (IDWritePaintReader* this, DWRITE_PAINT_ELEMENT* paintElement, UINT32 structSize) { return ((HRESULT (WINAPI*)(IDWritePaintReader*, DWRITE_PAINT_ELEMENT*, UINT32))this->v->tbl[7])(this, paintElement, structSize); }
+static inline HRESULT                           IDWritePaintReader_MoveToNextSibling                         (IDWritePaintReader* this, DWRITE_PAINT_ELEMENT* paintElement, UINT32 structSize) { return ((HRESULT (WINAPI*)(IDWritePaintReader*, DWRITE_PAINT_ELEMENT*, UINT32))this->v->tbl[8])(this, paintElement, structSize); }
+static inline HRESULT                           IDWritePaintReader_MoveToParent                              (IDWritePaintReader* this) { return ((HRESULT (WINAPI*)(IDWritePaintReader*))this->v->tbl[9])(this); }
+static inline HRESULT                           IDWritePaintReader_GetGradientStops                          (IDWritePaintReader* this, UINT32 firstGradientStopIndex, UINT32 gradientStopCount, D2D1_GRADIENT_STOP* gradientStops) { return ((HRESULT (WINAPI*)(IDWritePaintReader*, UINT32, UINT32, D2D1_GRADIENT_STOP*))this->v->tbl[10])(this, firstGradientStopIndex, gradientStopCount, gradientStops); }
+static inline HRESULT                           IDWritePaintReader_GetGradientStopColors                     (IDWritePaintReader* this, UINT32 firstGradientStopIndex, UINT32 gradientStopCount, DWRITE_PAINT_COLOR* gradientStopColors) { return ((HRESULT (WINAPI*)(IDWritePaintReader*, UINT32, UINT32, DWRITE_PAINT_COLOR*))this->v->tbl[11])(this, firstGradientStopIndex, gradientStopCount, gradientStopColors); }
 
 static inline HRESULT                           IDWritePixelSnapping_QueryInterface                          (IDWritePixelSnapping* this, const GUID* riid, void** ppvObject) { return ((HRESULT (WINAPI*)(IDWritePixelSnapping*, const GUID*, void**))this->v->tbl[0])(this, riid, ppvObject); }
 static inline UINT32                            IDWritePixelSnapping_AddRef                                  (IDWritePixelSnapping* this) { return ((UINT32 (WINAPI*)(IDWritePixelSnapping*))this->v->tbl[1])(this); }
@@ -3239,6 +3538,8 @@ static inline HRESULT                           IDWriteTypography_GetFontFeature
 DEFINE_GUID(IID_IDWriteAsyncResult,              0xce25f8fd, 0x863b, 0x4d13, 0x96, 0x51, 0xc1, 0xf8, 0x8d, 0xc7, 0x3f, 0xe2);
 DEFINE_GUID(IID_IDWriteBitmapRenderTarget,       0x5e5a32a3, 0x8dff, 0x4773, 0x9f, 0xf6, 0x06, 0x96, 0xea, 0xb7, 0x72, 0x67);
 DEFINE_GUID(IID_IDWriteBitmapRenderTarget1,      0x791e8298, 0x3ef3, 0x4230, 0x98, 0x80, 0xc9, 0xbd, 0xec, 0xc4, 0x20, 0x64);
+DEFINE_GUID(IID_IDWriteBitmapRenderTarget2,      0xc553a742, 0xfc01, 0x44da, 0xa6, 0x6e, 0xb8, 0xb9, 0xed, 0x6c, 0x39, 0x95);
+DEFINE_GUID(IID_IDWriteBitmapRenderTarget3,      0xaeec37db, 0xc337, 0x40f1, 0x8e, 0x2a, 0x9a, 0x41, 0xb1, 0x67, 0xb2, 0x38);
 DEFINE_GUID(IID_IDWriteColorGlyphRunEnumerator,  0xd31fbe17, 0xf157, 0x41a2, 0x8d, 0x24, 0xcb, 0x77, 0x9e, 0x05, 0x60, 0xe8);
 DEFINE_GUID(IID_IDWriteColorGlyphRunEnumerator1, 0x7c5f86da, 0xc7a1, 0x4f05, 0xb8, 0xe1, 0x55, 0xa1, 0x79, 0xfe, 0x5a, 0x35);
 DEFINE_GUID(IID_IDWriteFactory,                  0xb859ee5a, 0xd838, 0x4b5b, 0xa2, 0xe8, 0x1a, 0xdc, 0x7d, 0x93, 0xdb, 0x48);
@@ -3249,6 +3550,7 @@ DEFINE_GUID(IID_IDWriteFactory4,                 0x4b0b5bd3, 0x0797, 0x4549, 0x8
 DEFINE_GUID(IID_IDWriteFactory5,                 0x958db99a, 0xbe2a, 0x4f09, 0xaf, 0x7d, 0x65, 0x18, 0x98, 0x03, 0xd1, 0xd3);
 DEFINE_GUID(IID_IDWriteFactory6,                 0xf3744d80, 0x21f7, 0x42eb, 0xb3, 0x5d, 0x99, 0x5b, 0xc7, 0x2f, 0xc2, 0x23);
 DEFINE_GUID(IID_IDWriteFactory7,                 0x35d0e0b3, 0x9076, 0x4d2e, 0xa0, 0x16, 0xa9, 0x1b, 0x56, 0x8a, 0x06, 0xb4);
+DEFINE_GUID(IID_IDWriteFactory8,                 0xee0a7fb5, 0xdef4, 0x4c23, 0xa4, 0x54, 0xc9, 0xc7, 0xdc, 0x87, 0x83, 0x98);
 DEFINE_GUID(IID_IDWriteFont,                     0xacd16696, 0x8c14, 0x4f5d, 0x87, 0x7e, 0xfe, 0x3f, 0xc1, 0xd3, 0x27, 0x37);
 DEFINE_GUID(IID_IDWriteFont1,                    0xacd16696, 0x8c14, 0x4f5d, 0x87, 0x7e, 0xfe, 0x3f, 0xc1, 0xd3, 0x27, 0x38);
 DEFINE_GUID(IID_IDWriteFont2,                    0x29748ed6, 0x8c9c, 0x4a6a, 0xbe, 0x0b, 0xd9, 0x12, 0xe8, 0x53, 0x89, 0x44);
@@ -3267,6 +3569,7 @@ DEFINE_GUID(IID_IDWriteFontFace3,                0xd37d7598, 0x09be, 0x4222, 0xa
 DEFINE_GUID(IID_IDWriteFontFace4,                0x27f2a904, 0x4eb8, 0x441d, 0x96, 0x78, 0x05, 0x63, 0xf5, 0x3e, 0x3e, 0x2f);
 DEFINE_GUID(IID_IDWriteFontFace5,                0x98eff3a5, 0xb667, 0x479a, 0xb1, 0x45, 0xe2, 0xfa, 0x5b, 0x9f, 0xdc, 0x29);
 DEFINE_GUID(IID_IDWriteFontFace6,                0xc4b1fe1b, 0x6e84, 0x47d5, 0xb5, 0x4c, 0xa5, 0x97, 0x98, 0x1b, 0x06, 0xad);
+DEFINE_GUID(IID_IDWriteFontFace7,                0x3945b85b, 0xbc95, 0x40f7, 0xb7, 0x2c, 0x8b, 0x73, 0xbf, 0xc7, 0xe1, 0x3b);
 DEFINE_GUID(IID_IDWriteFontFaceReference,        0x5e7fa7ca, 0xdde3, 0x424c, 0x89, 0xf0, 0x9f, 0xcd, 0x6f, 0xed, 0x58, 0xcd);
 DEFINE_GUID(IID_IDWriteFontFaceReference1,       0xc081fe77, 0x2fd1, 0x41ac, 0xa5, 0xa3, 0x34, 0x98, 0x3c, 0x4b, 0xa6, 0x1a);
 DEFINE_GUID(IID_IDWriteFontFallback,             0xefa008f9, 0xf7a1, 0x48bf, 0xb0, 0x5c, 0xf2, 0x24, 0x71, 0x3c, 0xc0, 0xff);
@@ -3299,6 +3602,7 @@ DEFINE_GUID(IID_IDWriteInMemoryFontFileLoader,   0xdc102f47, 0xa12d, 0x4b1c, 0x8
 DEFINE_GUID(IID_IDWriteLocalFontFileLoader,      0xb2d9f3ec, 0xc9fe, 0x4a11, 0xa2, 0xec, 0xd8, 0x62, 0x08, 0xf7, 0xc0, 0xa2);
 DEFINE_GUID(IID_IDWriteLocalizedStrings,         0x08256209, 0x099a, 0x4b34, 0xb8, 0x6d, 0xc2, 0x2b, 0x11, 0x0e, 0x77, 0x71);
 DEFINE_GUID(IID_IDWriteNumberSubstitution,       0x14885cc9, 0xbab0, 0x4f90, 0xb6, 0xed, 0x5c, 0x36, 0x6a, 0x2c, 0xd0, 0x3d);
+DEFINE_GUID(IID_IDWritePaintReader,              0x8128e912, 0x3b97, 0x42a5, 0xab, 0x6c, 0x24, 0xaa, 0xd3, 0xa8, 0x6e, 0x54);
 DEFINE_GUID(IID_IDWritePixelSnapping,            0xeaf3a2da, 0xecf4, 0x4d24, 0xb6, 0x44, 0xb3, 0x4f, 0x68, 0x42, 0x02, 0x4b);
 DEFINE_GUID(IID_IDWriteRemoteFontFileLoader,     0x68648c83, 0x6ede, 0x46c0, 0xab, 0x46, 0x20, 0x08, 0x3a, 0x88, 0x7f, 0xde);
 DEFINE_GUID(IID_IDWriteRemoteFontFileStream,     0x4db3757a, 0x2c72, 0x4ed9, 0xb2, 0xb6, 0x1a, 0xba, 0xbe, 0x1a, 0xff, 0x9c);

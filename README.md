@@ -24,4 +24,4 @@ Run `dotnet run --project Generator`. It will write output `cd2d.h` and `cdwrite
 [ID2D1RenderTarget]: https://learn.microsoft.com/en-us/windows/win32/api/d2d1/nn-d2d1-id2d1rendertarget
 [ID2D1DeviceContext-CreateBitmap]: https://learn.microsoft.com/en-us/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-createbitmap(d2d1_size_u_constd2d1_bitmap_properties__id2d1bitmap)
 [ID2D1RenderTarget-CreateBitmap]: https://learn.microsoft.com/en-us/windows/win32/api/d2d1/nf-d2d1-id2d1rendertarget-createbitmap(d2d1_size_u_constvoid_uint32_constd2d1_bitmap_properties__id2d1bitmap)
-[d2d-accident]: https://blog.airesoft.co.uk/2014/12/direct2d-scene-of-the-accident/
+[d2d-accident]: https://web.archive.org/web/20260517203505/https://blog.airesoft.co.uk/2014/12/direct2d-scene-of-the-accident/
